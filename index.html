@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibroplex Bug Dating Service</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            background:
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0,0,0,0.03) 2px,
+                    rgba(0,0,0,0.03) 4px
+                ),
+                linear-gradient(to bottom, #d4c4a8, #c9b896, #bfae84);
+            font-family: 'Special Elite', 'Courier New', monospace;
+            color: #2a1810;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: #f4e8d3;
+            border: 3px double #5c4033;
+            padding: 40px;
+            box-shadow:
+                0 0 0 1px #8b7355,
+                0 0 0 4px #f4e8d3,
+                0 0 0 5px #5c4033,
+                8px 8px 20px rgba(0,0,0,0.4);
+            position: relative;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 1px solid #c9b896;
+            pointer-events: none;
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #5c4033;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-family: 'Special Elite', 'Courier New', monospace;
+            font-size: 2.2em;
+            margin: 0 0 5px 0;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #2a1810;
+            text-shadow: 1px 1px 0 #c9b896;
+        }
+
+        .header .subtitle {
+            font-size: 0.9em;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: #5c4033;
+            margin-top: 10px;
+        }
+
+        .deco-line {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 15px 0;
+            color: #8b7355;
+        }
+
+        .deco-line::before {
+            content: '– · – ·';
+            letter-spacing: 1px;
+        }
+
+        .deco-line::after {
+            content: '– – · –';
+            letter-spacing: 1px;
+        }
+
+        .telegraph-art {
+            font-size: 1.4em;
+            color: #5c4033;
+        }
+
+        .input-section {
+            background: #ebe0c8;
+            border: 1px solid #8b7355;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .input-section label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 1em;
+            letter-spacing: 1px;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 15px;
+            align-items: flex-end;
+        }
+
+        .input-row input {
+            flex: 1;
+            padding: 12px 15px;
+            font-family: 'Special Elite', monospace;
+            font-size: 1.3em;
+            border: 2px inset #8b7355;
+            background: #faf6ed;
+            color: #2a1810;
+            letter-spacing: 2px;
+        }
+
+        .input-row input:focus {
+            outline: none;
+            border-color: #5c4033;
+            background: #fff;
+        }
+
+        .input-row input::placeholder {
+            color: #a89880;
+            font-size: 0.8em;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-family: 'Special Elite', monospace;
+            font-size: 1em;
+            background: #5c4033;
+            color: #f4e8d3;
+            border: none;
+            cursor: pointer;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.2s;
+        }
+
+        button:hover {
+            background: #2a1810;
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        .result {
+            margin-top: 25px;
+            padding: 20px 15px;
+            border: 2px solid #5c4033;
+            background: #faf6ed;
+            text-align: center;
+            display: none;
+            overflow: hidden;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .result.visible {
+            display: block;
+        }
+
+        .result .year {
+            font-family: 'Special Elite', 'Courier New', monospace;
+            font-size: clamp(1em, 4vw, 1.6em);
+            color: #5c4033;
+            margin: 10px 0;
+            line-height: 1.4;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+
+        .result .message {
+            font-size: 1em;
+            line-height: 1.6;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+
+        .result .note {
+            font-size: 0.8em;
+            color: #6b5a47;
+            margin-top: 15px;
+            font-style: italic;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            line-height: 1.5;
+        }
+
+        .morse-decoration {
+            text-align: center;
+            color: #8b7355;
+            letter-spacing: 4px;
+            font-size: 0.9em;
+            margin: 20px 0;
+        }
+
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #8b7355;
+            font-size: 0.8em;
+            color: #6b5a47;
+            text-align: center;
+            line-height: 1.8;
+        }
+
+        .footer .credit {
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        .stamp {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
+            border: 2px solid #8b4513;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6em;
+            text-align: center;
+            color: #8b4513;
+            transform: rotate(15deg);
+            opacity: 0.7;
+            line-height: 1.2;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .error {
+            color: #8b2500;
+        }
+
+        .section-divider {
+            text-align: center;
+            margin: 40px 0;
+            color: #8b7355;
+            font-size: 1.2em;
+            letter-spacing: 10px;
+        }
+
+        .section-title {
+            font-family: 'Special Elite', 'Courier New', monospace;
+            font-size: 1.6em;
+            text-align: center;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #2a1810;
+            margin: 20px 0;
+            text-shadow: 1px 1px 0 #c9b896;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .radio-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            cursor: pointer;
+            padding: 8px;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .radio-label:hover {
+            background: #faf6ed;
+            border-color: #c9b896;
+        }
+
+        .radio-label.selected {
+            background: #fff;
+            border-color: #5c4033;
+            box-shadow: inset 0 0 0 1px #5c4033;
+        }
+
+        .radio-label input[type="radio"] {
+            margin-top: 3px;
+            accent-color: #5c4033;
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        .radio-text {
+            flex: 1;
+            line-height: 1.4;
+        }
+
+        .help-text {
+            font-size: 0.85em;
+            color: #6b5a47;
+            font-style: italic;
+            margin: 5px 0 15px 0;
+        }
+
+        .input-section.hidden {
+            display: none;
+        }
+
+        .input-section.disabled {
+            opacity: 0.4;
+            pointer-events: none;
+            position: relative;
+        }
+
+        .input-section.disabled::after {
+            content: '⬆ Complete previous step first ⬆';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #5c4033;
+            color: #f4e8d3;
+            padding: 10px 20px;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+            border: 2px solid #2a1810;
+            box-shadow: 3px 3px 0 rgba(0,0,0,0.3);
+            white-space: nowrap;
+            z-index: 10;
+        }
+
+        .input-section.disabled label {
+            cursor: not-allowed;
+        }
+
+        .damper-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .damper-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px;
+            border: 2px solid #c9b896;
+            background: #faf6ed;
+            transition: all 0.2s;
+        }
+
+        .damper-option:hover {
+            border-color: #8b7355;
+            background: #fff;
+        }
+
+        .damper-option.selected {
+            border-color: #5c4033;
+            background: #fff;
+            box-shadow: 0 0 0 2px #5c4033;
+        }
+
+        .damper-option input {
+            display: none;
+        }
+
+        .damper-svg {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 8px;
+        }
+
+        .damper-label {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #5c4033;
+            margin-bottom: 4px;
+        }
+
+        .damper-desc {
+            font-size: 0.75em;
+            color: #6b5a47;
+            text-align: center;
+            line-height: 1.3;
+        }
+
+        @media (max-width: 600px) {
+            .damper-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .input-section.disabled::after {
+                white-space: normal;
+                max-width: 80%;
+                text-align: center;
+                font-size: 0.8em;
+                padding: 8px 12px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .damper-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px 15px;
+            }
+            .header h1 {
+                font-size: 1.6em;
+            }
+            .input-row {
+                flex-direction: column;
+            }
+            .input-row input {
+                width: 100%;
+            }
+            .stamp {
+                display: none;
+            }
+            .result {
+                padding: 15px 10px;
+            }
+            .result .year {
+                font-size: clamp(0.9em, 4vw, 1.4em);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="stamp">CW<br>OPR<br>·—·</div>
+
+        <div class="header">
+            <h1>Vibroplex Bug</h1>
+            <h1>Dating Service</h1>
+            <div class="deco-line">
+                <span class="telegraph-art">⚡</span>
+            </div>
+            <div class="subtitle">Est. Serial Number Registry</div>
+        </div>
+
+        <div class="morse-decoration">
+            —···   ··—   ——·
+        </div>
+
+        <p style="text-align: center; line-height: 1.7;">
+            Enter your Vibroplex serial number below, OM,<br>
+            and we shall divine the birth year of your bug.
+        </p>
+
+        <div class="input-section">
+            <label for="serial">SERIAL NUMBER:</label>
+            <div class="input-row">
+                <input type="text" id="serial" placeholder="e.g. 148169" maxlength="10" autocomplete="off">
+                <button onclick="dateTheBug()">DATE IT</button>
+            </div>
+        </div>
+
+        <div class="result" id="result">
+            <div class="message" id="resultMessage"></div>
+            <div class="year" id="resultYear"></div>
+            <div class="note" id="resultNote"></div>
+        </div>
+
+        <div class="morse-decoration">
+            ——···   ···——
+        </div>
+
+        <div class="section-divider">
+            <span>✧ ✧ ✧</span>
+        </div>
+
+        <h2 class="section-title">Model Identifier</h2>
+
+        <p style="text-align: center; line-height: 1.7;">
+            Not sure which Vibroplex model you have?<br>
+            Follow these steps to identify your bug.
+        </p>
+
+        <div class="input-section">
+            <label>STEP 1: SELECT TYPE</label>
+            <div class="radio-group">
+                <label class="radio-label selected" onclick="selectBugType('standard')">
+                    <input type="radio" name="bugType" value="standard" checked>
+                    <span class="radio-text">Standard (most common)</span>
+                </label>
+                <label class="radio-label" onclick="selectBugType('upright')">
+                    <input type="radio" name="bugType" value="upright">
+                    <span class="radio-text">Upright (U-shaped base, stands vertical)</span>
+                </label>
+                <label class="radio-label" onclick="selectBugType('midget')">
+                    <input type="radio" name="bugType" value="midget">
+                    <span class="radio-text">Midget (thin base, outrigger leg, peg damper)</span>
+                </label>
+                <label class="radio-label" onclick="selectBugType('double')">
+                    <input type="radio" name="bugType" value="double">
+                    <span class="radio-text">Double Lever (two separate paddles)</span>
+                </label>
+            </div>
+        </div>
+
+        <div class="input-section" id="damperSection">
+            <label>STEP 2: SELECT DAMPER SHAPE</label>
+            <p class="help-text">Look at the damper assembly (the part with the wheel that stops the pendulum).</p>
+            <div class="damper-grid">
+                <label class="damper-option" onclick="selectDamper('L')">
+                    <input type="radio" name="damperType" value="L">
+                    <svg class="damper-svg" viewBox="0 0 80 80">
+                        <rect x="5" y="5" width="70" height="70" fill="none" stroke="#c9b896" stroke-width="1"/>
+                        <!-- L-shaped base piece -->
+                        <path d="M20 65 L20 35 L35 35 L35 40 L25 40 L25 65 Z" fill="#5c4033" stroke="#2a1810" stroke-width="1"/>
+                        <!-- Hinged upper piece -->
+                        <path d="M35 38 L55 38 L55 28 L35 28 Z" fill="#8b7355" stroke="#2a1810" stroke-width="1"/>
+                        <!-- Wheel -->
+                        <circle cx="60" cy="33" r="8" fill="none" stroke="#5c4033" stroke-width="2"/>
+                        <circle cx="60" cy="33" r="2" fill="#5c4033"/>
+                    </svg>
+                    <span class="damper-label">"L"</span>
+                    <span class="damper-desc">Two cast pieces, L-shaped base, hinged top with wheel</span>
+                </label>
+
+                <label class="damper-option" onclick="selectDamper('U')">
+                    <input type="radio" name="damperType" value="U">
+                    <svg class="damper-svg" viewBox="0 0 80 80">
+                        <rect x="5" y="5" width="70" height="70" fill="none" stroke="#c9b896" stroke-width="1"/>
+                        <!-- U-shaped casting -->
+                        <path d="M20 25 L20 65 L25 65 L25 30 L45 30 L45 65 L50 65 L50 25 Z" fill="#5c4033" stroke="#2a1810" stroke-width="1"/>
+                        <!-- Wheel on side -->
+                        <circle cx="55" cy="45" r="8" fill="none" stroke="#5c4033" stroke-width="2"/>
+                        <circle cx="55" cy="45" r="2" fill="#5c4033"/>
+                        <line x1="50" y1="45" x2="47" y2="45" stroke="#5c4033" stroke-width="2"/>
+                    </svg>
+                    <span class="damper-label">"U"</span>
+                    <span class="damper-desc">U-shaped casting with wheel on side</span>
+                </label>
+
+                <label class="damper-option" onclick="selectDamper('T')">
+                    <input type="radio" name="damperType" value="T">
+                    <svg class="damper-svg" viewBox="0 0 80 80">
+                        <rect x="5" y="5" width="70" height="70" fill="none" stroke="#c9b896" stroke-width="1"/>
+                        <!-- Vertical post -->
+                        <rect x="35" y="30" width="10" height="35" fill="#5c4033" stroke="#2a1810" stroke-width="1"/>
+                        <!-- Horizontal arm through post -->
+                        <rect x="20" y="38" width="40" height="6" fill="#8b7355" stroke="#2a1810" stroke-width="1"/>
+                        <!-- Wheel at end -->
+                        <circle cx="65" cy="41" r="8" fill="none" stroke="#5c4033" stroke-width="2"/>
+                        <circle cx="65" cy="41" r="2" fill="#5c4033"/>
+                    </svg>
+                    <span class="damper-label">"T"</span>
+                    <span class="damper-desc">Vertical post with horizontal arm, wheel at end</span>
+                </label>
+
+                <label class="damper-option" onclick="selectDamper('M')">
+                    <input type="radio" name="damperType" value="M">
+                    <svg class="damper-svg" viewBox="0 0 80 80">
+                        <rect x="5" y="5" width="70" height="70" fill="none" stroke="#c9b896" stroke-width="1"/>
+                        <!-- Two posts -->
+                        <rect x="20" y="30" width="8" height="35" fill="#5c4033" stroke="#2a1810" stroke-width="1"/>
+                        <rect x="52" y="30" width="8" height="35" fill="#5c4033" stroke="#2a1810" stroke-width="1"/>
+                        <!-- Horizontal bar -->
+                        <rect x="20" y="30" width="40" height="5" fill="#8b7355" stroke="#2a1810" stroke-width="1"/>
+                        <!-- Wheel hanging from bar -->
+                        <line x1="40" y1="35" x2="40" y2="45" stroke="#5c4033" stroke-width="2"/>
+                        <circle cx="40" cy="53" r="8" fill="none" stroke="#5c4033" stroke-width="2"/>
+                        <circle cx="40" cy="53" r="2" fill="#5c4033"/>
+                    </svg>
+                    <span class="damper-label">"M"</span>
+                    <span class="damper-desc">Wheel hangs from bar between two posts</span>
+                </label>
+
+                <label class="damper-option" onclick="selectDamper('I')">
+                    <input type="radio" name="damperType" value="I">
+                    <svg class="damper-svg" viewBox="0 0 80 80">
+                        <rect x="5" y="5" width="70" height="70" fill="none" stroke="#c9b896" stroke-width="1"/>
+                        <!-- U-shaped bent metal holder -->
+                        <path d="M30 65 L30 40 L32 38 L48 38 L50 40 L50 65 L45 65 L45 43 L35 43 L35 65 Z" fill="#5c4033" stroke="#2a1810" stroke-width="1"/>
+                        <!-- Wheel held up -->
+                        <circle cx="40" cy="28" r="8" fill="none" stroke="#5c4033" stroke-width="2"/>
+                        <circle cx="40" cy="28" r="2" fill="#5c4033"/>
+                        <line x1="40" y1="36" x2="40" y2="38" stroke="#5c4033" stroke-width="2"/>
+                    </svg>
+                    <span class="damper-label">"I"</span>
+                    <span class="damper-desc">U-shaped bent metal holds wheel, looks like "I"</span>
+                </label>
+
+                <label class="damper-option" onclick="selectDamper('Simple')">
+                    <input type="radio" name="damperType" value="Simple">
+                    <svg class="damper-svg" viewBox="0 0 80 80">
+                        <rect x="5" y="5" width="70" height="70" fill="none" stroke="#c9b896" stroke-width="1"/>
+                        <!-- Simple post without wheel -->
+                        <rect x="35" y="30" width="10" height="35" fill="#5c4033" stroke="#2a1810" stroke-width="1"/>
+                        <!-- No wheel - just flat top -->
+                        <rect x="30" y="25" width="20" height="8" fill="#8b7355" stroke="#2a1810" stroke-width="1"/>
+                        <!-- X to indicate no wheel -->
+                        <text x="40" y="58" text-anchor="middle" fill="#8b7355" font-size="10" font-family="Special Elite">NO</text>
+                        <text x="40" y="68" text-anchor="middle" fill="#8b7355" font-size="10" font-family="Special Elite">WHEEL</text>
+                    </svg>
+                    <span class="damper-label">"Simple"</span>
+                    <span class="damper-desc">No loosely-mounted wheel</span>
+                </label>
+            </div>
+        </div>
+
+        <div class="input-section disabled" id="baseSection">
+            <label>STEP 3: SELECT BASE WIDTH</label>
+            <p class="help-text">Measure the width of the base.</p>
+            <div class="radio-group">
+                <label class="radio-label" onclick="selectBaseWidth('3.5')">
+                    <input type="radio" name="baseWidth" value="3.5">
+                    <span class="radio-text">3.5 inches (widest)</span>
+                </label>
+                <label class="radio-label" onclick="selectBaseWidth('3')">
+                    <input type="radio" name="baseWidth" value="3">
+                    <span class="radio-text">3 inches</span>
+                </label>
+                <label class="radio-label" onclick="selectBaseWidth('2.5')">
+                    <input type="radio" name="baseWidth" value="2.5">
+                    <span class="radio-text">2.5 inches (narrowest)</span>
+                </label>
+            </div>
+        </div>
+
+        <div class="result" id="modelResult">
+            <div class="message" id="modelMessage"></div>
+            <div class="year" id="modelName"></div>
+            <div class="note" id="modelNote"></div>
+        </div>
+
+        <div class="morse-decoration">
+            ——···   ···——
+        </div>
+
+        <div class="footer">
+            Data compiled by John Elwood, WW7P (SK) and Randy Cole, KN6W.<br>
+            <a href="https://radiotelegraphy.net/vibroplexdating.htm" target="_blank" style="color: #5c4033;">Serial number source</a> · <a href="https://www.vibroplexcollector.net/?page_id=551" target="_blank" style="color: #5c4033;">Model identification source</a>
+            <div class="credit">
+                "Now, when someone asks how old your key is, you can say,<br>
+                'The birth date of my Vibroplex is ______.'"<br>
+                — WW7P
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // WW7P's Vibroplex serial number dating table
+        // Main production sequence (consecutive numbering era)
+        const mainRanges = [
+            { min: 400, max: 1286, year: 1905 },
+            { min: 1287, max: 2777, year: 1906 },
+            { min: 2778, max: 3255, year: 1907 },
+            { min: 3256, max: 6106, year: 1908 },
+            // Gap: 6107-9999 no numbers reported
+            { min: 10000, max: 10399, year: 1911 },
+            { min: 10400, max: 11766, year: 1912 },
+            { min: 11767, max: 12250, year: 1913 },
+            // Gap: 12251-19999 no numbers reported
+            { min: 20000, max: 20621, year: 1912 },
+            { min: 20622, max: 20800, year: 1913 },
+            // Gap: 20801-24999 assumed
+            { min: 25000, max: 25577, year: 1913 },
+            { min: 25578, max: 26154, year: 1914 },
+            // Gap: 26155-49999 no numbers reported
+            { min: 50000, max: 50907, year: 1913 },
+            { min: 50908, max: 51827, year: 1914 },
+            { min: 51828, max: 54231, year: 1915 },
+            { min: 54232, max: 57268, year: 1916 },
+            { min: 57269, max: 60308, year: 1917 },
+            { min: 60309, max: 64573, year: 1918 },
+            { min: 64574, max: 72352, year: 1919 },
+            { min: 72353, max: 80960, year: 1920 },
+            { min: 80961, max: 84681, year: 1921 },
+            { min: 84682, max: 88402, year: 1922 },
+            { min: 88403, max: 91375, year: 1923 },
+            { min: 91376, max: 94316, year: 1924 },
+            { min: 94317, max: 95865, year: 1925 },
+            { min: 95866, max: 99574, year: 1926 },
+            { min: 99575, max: 101339, year: 1927 },
+            { min: 101340, max: 103104, year: 1928 },
+            { min: 103105, max: 103952, year: 1929 },
+            { min: 103953, max: 104800, year: 1930 },
+            { min: 104801, max: 105648, year: 1931 },
+            { min: 105649, max: 106496, year: 1932 },
+            { min: 106497, max: 107344, year: 1933 },
+            { min: 107345, max: 108192, year: 1934 },
+            { min: 108193, max: 109040, year: 1935 },
+            { min: 109041, max: 109888, year: 1936 },
+            { min: 109889, max: 110736, year: 1937 },
+            { min: 110737, max: 111571, year: 1938 },
+            { min: 111572, max: 113865, year: 1939 },
+            { min: 113866, max: 116159, year: 1940 },
+            { min: 116160, max: 118452, year: 1941 },
+            { min: 118453, max: 122536, year: 1942 },
+            { min: 123537, max: 126619, year: 1943 },
+            { min: 126620, max: 137394, year: 1944 },
+            { min: 137395, max: 148169, year: 1945 },
+            { min: 148170, max: 152526, year: 1946 },
+            { min: 152527, max: 156883, year: 1947 },
+            { min: 156884, max: 161353, year: 1948 },
+            { min: 161354, max: 165822, year: 1949 },
+            { min: 165823, max: 170292, year: 1950 },
+            { min: 170293, max: 174762, year: 1951 },
+            { min: 174763, max: 179232, year: 1952 },
+            { min: 179233, max: 183702, year: 1953 },
+            { min: 183703, max: 188172, year: 1954 },
+            { min: 188173, max: 192642, year: 1955 },
+            { min: 192643, max: 197112, year: 1956 },
+            { min: 197113, max: 201582, year: 1957 },
+            { min: 201583, max: 206052, year: 1958 },
+            { min: 206053, max: 210517, year: 1959 },
+            { min: 210518, max: 217034, year: 1960 },
+            { min: 217035, max: 223551, year: 1961 },
+            { min: 223552, max: 230068, year: 1962 },
+            { min: 230069, max: 236585, year: 1963 },
+            { min: 236586, max: 240870, year: 1964 },
+            { min: 240871, max: 245155, year: 1965 },
+            { min: 245156, max: 249440, year: 1966 },
+            { min: 249441, max: 253725, year: 1967 },
+            { min: 253726, max: 258010, year: 1968 },
+            { min: 258011, max: 263874, year: 1969 },
+            { min: 263875, max: 266151, year: 1970 },
+            { min: 266152, max: 267328, year: 1971 },
+            { min: 267329, max: 270152, year: 1972 },
+            { min: 270153, max: 272975, year: 1973 },
+            // Gap: 272976-373006 only two numbers reported
+            { min: 373007, max: 375415, year: 1974 },
+            { min: 375416, max: 378752, year: 1975 },
+            { min: 378753, max: 382089, year: 1976 },
+            { min: 382090, max: 385426, year: 1977 },
+            { min: 385427, max: 386951, year: 1978 },
+            // Portland, Maine era begins
+            { min: 386952, max: 391230, year: 1979 },
+        ];
+
+        // Special prefix ranges (early production)
+        const prefixRanges = {
+            'D': { min: 5015, max: 5310, year: 1913, note: 'Double Lever model' },
+            'B': { min: 518, max: 1623, year: 1914, note: 'No. 4 model' }
+        };
+
+        // Portland, Maine era (1980+) - multiple parallel series
+        const portlandRanges = [
+            { min: 4003, max: 4955, year: 1980 },
+            { min: 5261, max: 5921, year: 1980 },
+            { min: 40000, max: 40787, year: 1980 },
+            { min: 40788, max: 42077, year: 1983 },
+            { min: 42078, max: 49762, year: '1982-1984', note: 'Portland, ME era - assorted numbers' },
+            { min: 49763, max: 51710, year: 1985 },
+            { min: 51711, max: 54163, year: 1986 },
+            { min: 54164, max: 55911, year: 1987 },
+            { min: 55912, max: 60077, year: '1987-1988' },
+            { min: 60078, max: 61963, year: 1988 },
+            { min: 61964, max: 62254, year: '1988-1989' },
+            { min: 62255, max: 65764, year: 1990 },
+            { min: 65765, max: 67132, year: 1991 },
+            { min: 67133, max: 69068, year: 1992 },
+            { min: 69069, max: 70410, year: 1993 },
+            { min: 70411, max: 70778, year: 1994 },
+            { min: 70779, max: 80361, year: '1994-1995' },
+            { min: 80362, max: 80870, year: 1995 },
+        ];
+
+        // Portland 01xxx series
+        const portland01 = [
+            { min: 1185, max: 1671, year: 1983 },
+            { min: 1672, max: 2158, year: 1984 },
+            { min: 2159, max: 2645, year: 1985 },
+            { min: 2646, max: 3132, year: 1986 },
+            { min: 3133, max: 3619, year: 1987 },
+            { min: 3620, max: 4106, year: 1988 },
+            { min: 4107, max: 4337, year: '1988-1989' },
+            { min: 4338, max: 5334, year: 1990 },
+            { min: 5335, max: 6439, year: 1991 },
+            { min: 6440, max: 7725, year: 1992 },
+            { min: 7726, max: 7896, year: 1993 },
+            { min: 7897, max: 8205, year: 1994 },
+            { min: 8206, max: 8514, year: 1995 },
+        ];
+
+        function dateTheBug() {
+            const input = document.getElementById('serial').value.trim().toUpperCase();
+            const resultDiv = document.getElementById('result');
+            const messageEl = document.getElementById('resultMessage');
+            const yearEl = document.getElementById('resultYear');
+            const noteEl = document.getElementById('resultNote');
+
+            if (!input) {
+                showResult('Please enter a serial number, OM.', '', '', true);
+                return;
+            }
+
+            // Remove commas (WW7P added them for readability)
+            const cleaned = input.replace(/,/g, '');
+
+            // Check for prefix (D or B series)
+            const prefixMatch = cleaned.match(/^([DB])(\d+)$/);
+            if (prefixMatch) {
+                const prefix = prefixMatch[1];
+                const num = parseInt(prefixMatch[2], 10);
+                const range = prefixRanges[prefix];
+
+                if (range && num >= range.min && num <= range.max) {
+                    showResult(
+                        `Serial ${input} indicates your bug was manufactured circa:`,
+                        range.year,
+                        `${range.note}. Data compiled by WW7P from over 3,000 documented keys.`
+                    );
+                    return;
+                }
+            }
+
+            // Check for pure numeric
+            const numMatch = cleaned.match(/^(\d+)$/);
+            if (!numMatch) {
+                showResult(
+                    'QRM! Unable to parse that serial number.',
+                    '??',
+                    'Try entering just the numbers, or a prefix like D5100 or B1000.',
+                    true
+                );
+                return;
+            }
+
+            const serial = parseInt(numMatch[1], 10);
+
+            // Check main ranges first
+            for (const range of mainRanges) {
+                if (serial >= range.min && serial <= range.max) {
+                    showResult(
+                        `Serial ${input} indicates your bug was manufactured circa:`,
+                        range.year,
+                        'Dates are approximate (±1 year). Data compiled by WW7P from over 3,000 documented keys.'
+                    );
+                    return;
+                }
+            }
+
+            // Check if it might be a Portland-era 01xxx series (leading zeros)
+            if (serial >= 1185 && serial <= 8514) {
+                for (const range of portland01) {
+                    if (serial >= range.min && serial <= range.max) {
+                        showResult(
+                            `Serial ${input} may be from the Portland, ME "01xxx" series:`,
+                            range.year,
+                            'Portland era used multiple parallel numbering systems. Check your nameplate for location info.'
+                        );
+                        return;
+                    }
+                }
+            }
+
+            // Check Portland-era ranges
+            for (const range of portlandRanges) {
+                if (serial >= range.min && serial <= range.max) {
+                    const note = range.note || 'Portland, ME era. Multiple numbering series were used concurrently.';
+                    showResult(
+                        `Serial ${input} indicates your bug was manufactured circa:`,
+                        range.year,
+                        note
+                    );
+                    return;
+                }
+            }
+
+            // Known gaps
+            if (serial >= 6107 && serial <= 9999) {
+                showResult(
+                    'QRX — No keys reported in this range.',
+                    '???',
+                    'Serial numbers 6,107-9,999 were not used according to WW7P\'s research.',
+                    true
+                );
+                return;
+            }
+
+            if (serial >= 12251 && serial <= 19999) {
+                showResult(
+                    'QRX — No keys reported in this range.',
+                    '???',
+                    'Serial numbers 12,251-19,999 were not used according to WW7P\'s research.',
+                    true
+                );
+                return;
+            }
+
+            if (serial >= 26155 && serial <= 49999) {
+                showResult(
+                    'QRX — No keys reported in this range.',
+                    '???',
+                    'Serial numbers 26,155-49,999 were not used according to WW7P\'s research.',
+                    true
+                );
+                return;
+            }
+
+            if (serial >= 272976 && serial <= 373006) {
+                showResult(
+                    'Very few keys reported in this range.',
+                    '1973-1974?',
+                    'Only two serial numbers documented between 272,976 and 373,006. Dating uncertain.',
+                    true
+                );
+                return;
+            }
+
+            // Unknown
+            showResult(
+                'Unable to date this serial number.',
+                '???',
+                'This number falls outside documented ranges. It may be a post-1995 key, a special edition, or possibly misread. 73!',
+                true
+            );
+        }
+
+        function showResult(message, year, note, isError = false) {
+            const resultDiv = document.getElementById('result');
+            const messageEl = document.getElementById('resultMessage');
+            const yearEl = document.getElementById('resultYear');
+            const noteEl = document.getElementById('resultNote');
+
+            messageEl.textContent = message;
+            messageEl.className = 'message' + (isError ? ' error' : '');
+            yearEl.textContent = year;
+            yearEl.className = 'year' + (isError ? ' error' : '');
+            noteEl.textContent = note;
+            resultDiv.classList.add('visible');
+        }
+
+        // Allow Enter key to submit
+        document.getElementById('serial').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                dateTheBug();
+            }
+        });
+
+        // Auto-focus input
+        document.getElementById('serial').focus();
+
+        // Model identification logic based on KN6W's table
+        const modelTable = {
+            'L': {
+                '3.5': { model: 'Original, Double Lever, or Presentation', note: 'The Original is the most common Vibroplex model.' },
+                '3': { model: 'Junior', note: 'The Junior was a smaller, more affordable model.' },
+                '2.5': { model: 'Blue Racer (later version)', note: 'Later Blue Racers used the L damper.' }
+            },
+            'U': {
+                '3.5': { model: '#4 Blue Racer (wide-base, special order)', note: 'Wide-base Blue Racers are uncommon.' },
+                '3': { model: '#4 Blue Racer (wide-base, special order)', note: 'Wide-base Blue Racers are uncommon.' },
+                '2.5': { model: '#4 Blue Racer', note: 'The standard Blue Racer configuration.' }
+            },
+            'T': {
+                '3.5': { model: 'Patent 457, Model X, or early Original/Double Lever', note: 'T dampers were used on several early models.' },
+                '3': { model: 'None known', note: 'No Vibroplex with this combination has been documented.', unknown: true },
+                '2.5': { model: '#4 Blue Racer (rare)', note: 'A few Blue Racers had T dampers.' }
+            },
+            'M': {
+                '3.5': { model: 'Lightning Bug', note: 'The Lightning Bug is a distinctive model with the M damper.' },
+                '3': { model: 'None known', note: 'No Vibroplex with this combination has been documented.', unknown: true },
+                '2.5': { model: 'None known', note: 'No Vibroplex with this combination has been documented.', unknown: true }
+            },
+            'I': {
+                '3.5': { model: 'Champion', note: 'The Champion was introduced in 1939.' },
+                '3': { model: 'Zephyr', note: 'The Zephyr was a streamlined model made 1939-1958.' },
+                '2.5': { model: 'None known', note: 'No Vibroplex with this combination has been documented.', unknown: true }
+            },
+            'Simple': {
+                '3.5': { model: 'Improved Model X', note: 'The Improved Model X had a simplified damper.' },
+                '3': { model: 'None known', note: 'No Vibroplex with this combination has been documented.', unknown: true },
+                '2.5': { model: 'Midget (advertised but unconfirmed)', note: 'A 2.5" base Midget was advertised but none are known to exist.', unknown: true }
+            }
+        };
+
+        function selectBugType(value) {
+            // Clear previous selection styling in Step 1
+            document.querySelectorAll('input[name="bugType"]').forEach(r => {
+                r.closest('.radio-label').classList.remove('selected');
+            });
+            // Set the radio button
+            const radio = document.querySelector(`input[name="bugType"][value="${value}"]`);
+            if (radio) {
+                radio.checked = true;
+                radio.closest('.radio-label').classList.add('selected');
+            }
+            updateModelFlow();
+        }
+
+        function selectDamper(value) {
+            // Clear previous selection styling
+            document.querySelectorAll('.damper-option').forEach(opt => opt.classList.remove('selected'));
+            // Set the radio button
+            const radio = document.querySelector(`input[name="damperType"][value="${value}"]`);
+            if (radio) {
+                radio.checked = true;
+                radio.closest('.damper-option').classList.add('selected');
+            }
+
+            // Clear base width selections
+            document.querySelectorAll('input[name="baseWidth"]').forEach(r => r.checked = false);
+            document.querySelectorAll('#baseSection .radio-label').forEach(opt => opt.classList.remove('selected'));
+
+            // Get valid base widths for this damper (exclude "unknown" entries)
+            const damperData = modelTable[value];
+            const validWidths = [];
+            ['3.5', '3', '2.5'].forEach(width => {
+                const entry = damperData[width];
+                const radioLabel = document.querySelector(`input[name="baseWidth"][value="${width}"]`).closest('.radio-label');
+                if (entry.unknown) {
+                    radioLabel.style.display = 'none';
+                } else {
+                    radioLabel.style.display = 'flex';
+                    validWidths.push(width);
+                }
+            });
+
+            const baseSection = document.getElementById('baseSection');
+            const modelResult = document.getElementById('modelResult');
+
+            // If only one valid option, auto-select and show result
+            if (validWidths.length === 1) {
+                baseSection.classList.add('hidden');
+                const onlyWidth = validWidths[0];
+                const result = damperData[onlyWidth];
+
+                document.getElementById('modelMessage').textContent = 'Your Vibroplex appears to be ' + getArticle(result.model) + ':';
+                document.getElementById('modelMessage').className = 'message';
+                document.getElementById('modelName').textContent = result.model;
+                document.getElementById('modelName').className = 'year';
+                document.getElementById('modelNote').textContent = result.note;
+                modelResult.classList.add('visible');
+            } else {
+                // Multiple options - show step 3
+                baseSection.classList.remove('hidden');
+                baseSection.classList.remove('disabled');
+                modelResult.classList.remove('visible');
+            }
+        }
+
+        // Helper function to determine "a" vs "an" based on model name
+        function getArticle(modelName) {
+            // Get first letter, skipping any leading # or special chars
+            const firstChar = modelName.replace(/^[^a-zA-Z]*/, '').charAt(0).toUpperCase();
+            const vowels = ['A', 'E', 'I', 'O', 'U'];
+            return vowels.includes(firstChar) ? 'an' : 'a';
+        }
+
+        function selectBaseWidth(value) {
+            // Clear previous selection styling
+            document.querySelectorAll('#baseSection .radio-label').forEach(opt => opt.classList.remove('selected'));
+            // Set the radio button
+            const radio = document.querySelector(`input[name="baseWidth"][value="${value}"]`);
+            if (radio) {
+                radio.checked = true;
+                radio.closest('.radio-label').classList.add('selected');
+            }
+            updateModelResult();
+        }
+
+        function updateModelFlow() {
+            const bugType = document.querySelector('input[name="bugType"]:checked').value;
+            const damperSection = document.getElementById('damperSection');
+            const baseSection = document.getElementById('baseSection');
+            const modelResult = document.getElementById('modelResult');
+
+            // Clear previous selections in steps 2 and 3
+            document.querySelectorAll('input[name="damperType"]').forEach(r => r.checked = false);
+            document.querySelectorAll('input[name="baseWidth"]').forEach(r => r.checked = false);
+            document.querySelectorAll('.damper-option').forEach(opt => opt.classList.remove('selected'));
+            document.querySelectorAll('#baseSection .radio-label').forEach(opt => {
+                opt.classList.remove('selected');
+                opt.style.display = 'flex'; // Reset visibility
+            });
+
+            if (bugType === 'standard') {
+                damperSection.classList.remove('hidden');
+                damperSection.classList.remove('disabled');
+                baseSection.classList.remove('hidden');
+                baseSection.classList.add('disabled');
+                modelResult.classList.remove('visible');
+            } else {
+                damperSection.classList.remove('disabled');
+                damperSection.classList.add('hidden');
+                baseSection.classList.add('hidden');
+                showSpecialModel(bugType);
+            }
+        }
+
+        function showSpecialModel(bugType) {
+            const modelResult = document.getElementById('modelResult');
+            const modelMessage = document.getElementById('modelMessage');
+            const modelName = document.getElementById('modelName');
+            const modelNote = document.getElementById('modelNote');
+
+            let model, note;
+            switch(bugType) {
+                case 'upright':
+                    model = 'Upright';
+                    note = 'The Upright is the most collectible Vibroplex model. It has a U-shaped base and stands vertically.';
+                    break;
+                case 'midget':
+                    model = 'Midget';
+                    note = 'The Midget is very scarce and collectible. It has a thin nickel-plated base with an outrigger leg.';
+                    break;
+                case 'double':
+                    model = 'Double Lever';
+                    note = 'The Double Lever has two separate levers, each with its own paddle. A hard-to-find model.';
+                    break;
+            }
+
+            modelMessage.textContent = 'Your Vibroplex appears to be ' + getArticle(model) + ':';
+            modelMessage.className = 'message';
+            modelName.textContent = model;
+            modelName.className = 'year';
+            modelNote.textContent = note;
+            modelResult.classList.add('visible');
+        }
+
+        function updateModelResult() {
+            const bugType = document.querySelector('input[name="bugType"]:checked').value;
+            if (bugType !== 'standard') return;
+
+            const damperType = document.querySelector('input[name="damperType"]:checked');
+            const baseWidth = document.querySelector('input[name="baseWidth"]:checked');
+
+            if (!damperType || !baseWidth) {
+                document.getElementById('modelResult').classList.remove('visible');
+                return;
+            }
+
+            const damper = damperType.value;
+            const width = baseWidth.value;
+            const result = modelTable[damper][width];
+
+            const modelResult = document.getElementById('modelResult');
+            const modelMessage = document.getElementById('modelMessage');
+            const modelName = document.getElementById('modelName');
+            const modelNote = document.getElementById('modelNote');
+
+            if (result.unknown) {
+                modelMessage.textContent = 'No documented model matches this combination:';
+                modelMessage.className = 'message';
+                modelName.textContent = '???';
+                modelName.className = 'year error';
+            } else {
+                modelMessage.textContent = 'Your Vibroplex appears to be ' + getArticle(result.model) + ':';
+                modelMessage.className = 'message';
+                modelName.textContent = result.model;
+                modelName.className = 'year';
+            }
+            modelNote.textContent = result.note;
+            modelResult.classList.add('visible');
+        }
+
+        // Initialize the model flow
+        updateModelFlow();
+    </script>
+</body>
+</html>
