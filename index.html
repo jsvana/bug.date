@@ -387,10 +387,12 @@
             display: none;
         }
 
-        .damper-svg {
-            width: 80px;
-            height: 80px;
+        .damper-img {
+            width: 100px;
+            height: 100px;
             margin-bottom: 8px;
+            object-fit: cover;
+            border: 1px solid #c9b896;
         }
 
         .damper-label {
@@ -530,96 +532,42 @@
             <div class="damper-grid">
                 <label class="damper-option" onclick="selectDamper('L')">
                     <input type="radio" name="damperType" value="L">
-                    <svg class="damper-svg" viewBox="0 0 80 80">
-                        <rect x="5" y="5" width="70" height="70" fill="none" stroke="#c9b896" stroke-width="1"/>
-                        <!-- L-shaped base piece -->
-                        <path d="M20 65 L20 35 L35 35 L35 40 L25 40 L25 65 Z" fill="#5c4033" stroke="#2a1810" stroke-width="1"/>
-                        <!-- Hinged upper piece -->
-                        <path d="M35 38 L55 38 L55 28 L35 28 Z" fill="#8b7355" stroke="#2a1810" stroke-width="1"/>
-                        <!-- Wheel -->
-                        <circle cx="60" cy="33" r="8" fill="none" stroke="#5c4033" stroke-width="2"/>
-                        <circle cx="60" cy="33" r="2" fill="#5c4033"/>
-                    </svg>
+                    <img class="damper-img" src="img/L-Damper-150x150.jpg" alt="L-shaped damper">
                     <span class="damper-label">"L"</span>
                     <span class="damper-desc">Two cast pieces, L-shaped base, hinged top with wheel</span>
                 </label>
 
                 <label class="damper-option" onclick="selectDamper('U')">
                     <input type="radio" name="damperType" value="U">
-                    <svg class="damper-svg" viewBox="0 0 80 80">
-                        <rect x="5" y="5" width="70" height="70" fill="none" stroke="#c9b896" stroke-width="1"/>
-                        <!-- U-shaped casting -->
-                        <path d="M20 25 L20 65 L25 65 L25 30 L45 30 L45 65 L50 65 L50 25 Z" fill="#5c4033" stroke="#2a1810" stroke-width="1"/>
-                        <!-- Wheel on side -->
-                        <circle cx="55" cy="45" r="8" fill="none" stroke="#5c4033" stroke-width="2"/>
-                        <circle cx="55" cy="45" r="2" fill="#5c4033"/>
-                        <line x1="50" y1="45" x2="47" y2="45" stroke="#5c4033" stroke-width="2"/>
-                    </svg>
+                    <img class="damper-img" src="img/U-Damper-150x150.jpg" alt="U-shaped damper">
                     <span class="damper-label">"U"</span>
                     <span class="damper-desc">U-shaped casting with wheel on side</span>
                 </label>
 
                 <label class="damper-option" onclick="selectDamper('T')">
                     <input type="radio" name="damperType" value="T">
-                    <svg class="damper-svg" viewBox="0 0 80 80">
-                        <rect x="5" y="5" width="70" height="70" fill="none" stroke="#c9b896" stroke-width="1"/>
-                        <!-- Vertical post -->
-                        <rect x="35" y="30" width="10" height="35" fill="#5c4033" stroke="#2a1810" stroke-width="1"/>
-                        <!-- Horizontal arm through post -->
-                        <rect x="20" y="38" width="40" height="6" fill="#8b7355" stroke="#2a1810" stroke-width="1"/>
-                        <!-- Wheel at end -->
-                        <circle cx="65" cy="41" r="8" fill="none" stroke="#5c4033" stroke-width="2"/>
-                        <circle cx="65" cy="41" r="2" fill="#5c4033"/>
-                    </svg>
+                    <img class="damper-img" src="img/T-Damper-150x150.jpg" alt="T-shaped damper">
                     <span class="damper-label">"T"</span>
                     <span class="damper-desc">Vertical post with horizontal arm, wheel at end</span>
                 </label>
 
                 <label class="damper-option" onclick="selectDamper('M')">
                     <input type="radio" name="damperType" value="M">
-                    <svg class="damper-svg" viewBox="0 0 80 80">
-                        <rect x="5" y="5" width="70" height="70" fill="none" stroke="#c9b896" stroke-width="1"/>
-                        <!-- Two posts -->
-                        <rect x="20" y="30" width="8" height="35" fill="#5c4033" stroke="#2a1810" stroke-width="1"/>
-                        <rect x="52" y="30" width="8" height="35" fill="#5c4033" stroke="#2a1810" stroke-width="1"/>
-                        <!-- Horizontal bar -->
-                        <rect x="20" y="30" width="40" height="5" fill="#8b7355" stroke="#2a1810" stroke-width="1"/>
-                        <!-- Wheel hanging from bar -->
-                        <line x1="40" y1="35" x2="40" y2="45" stroke="#5c4033" stroke-width="2"/>
-                        <circle cx="40" cy="53" r="8" fill="none" stroke="#5c4033" stroke-width="2"/>
-                        <circle cx="40" cy="53" r="2" fill="#5c4033"/>
-                    </svg>
+                    <img class="damper-img" src="img/M-Damper-150x150.jpg" alt="M-shaped damper">
                     <span class="damper-label">"M"</span>
                     <span class="damper-desc">Wheel hangs from bar between two posts</span>
                 </label>
 
                 <label class="damper-option" onclick="selectDamper('I')">
                     <input type="radio" name="damperType" value="I">
-                    <svg class="damper-svg" viewBox="0 0 80 80">
-                        <rect x="5" y="5" width="70" height="70" fill="none" stroke="#c9b896" stroke-width="1"/>
-                        <!-- U-shaped bent metal holder -->
-                        <path d="M30 65 L30 40 L32 38 L48 38 L50 40 L50 65 L45 65 L45 43 L35 43 L35 65 Z" fill="#5c4033" stroke="#2a1810" stroke-width="1"/>
-                        <!-- Wheel held up -->
-                        <circle cx="40" cy="28" r="8" fill="none" stroke="#5c4033" stroke-width="2"/>
-                        <circle cx="40" cy="28" r="2" fill="#5c4033"/>
-                        <line x1="40" y1="36" x2="40" y2="38" stroke="#5c4033" stroke-width="2"/>
-                    </svg>
+                    <img class="damper-img" src="img/I-Damper-150x150.jpg" alt="I-shaped damper">
                     <span class="damper-label">"I"</span>
                     <span class="damper-desc">U-shaped bent metal holds wheel, looks like "I"</span>
                 </label>
 
                 <label class="damper-option" onclick="selectDamper('Simple')">
                     <input type="radio" name="damperType" value="Simple">
-                    <svg class="damper-svg" viewBox="0 0 80 80">
-                        <rect x="5" y="5" width="70" height="70" fill="none" stroke="#c9b896" stroke-width="1"/>
-                        <!-- Simple post without wheel -->
-                        <rect x="35" y="30" width="10" height="35" fill="#5c4033" stroke="#2a1810" stroke-width="1"/>
-                        <!-- No wheel - just flat top -->
-                        <rect x="30" y="25" width="20" height="8" fill="#8b7355" stroke="#2a1810" stroke-width="1"/>
-                        <!-- X to indicate no wheel -->
-                        <text x="40" y="58" text-anchor="middle" fill="#8b7355" font-size="10" font-family="Special Elite">NO</text>
-                        <text x="40" y="68" text-anchor="middle" fill="#8b7355" font-size="10" font-family="Special Elite">WHEEL</text>
-                    </svg>
+                    <img class="damper-img" src="img/Simple-Damper-150x150.jpg" alt="Simple damper">
                     <span class="damper-label">"Simple"</span>
                     <span class="damper-desc">No loosely-mounted wheel</span>
                 </label>
