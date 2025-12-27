@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Background circle with vintage parchment color -->
+  <circle cx="16" cy="16" r="15" fill="#f4e8d3" stroke="#5c4033" stroke-width="2"/>
+
+  <!-- Lightning bolt representing the Vibroplex "bug" -->
+  <path d="M18 4 L12 15 L16 15 L14 28 L22 14 L17 14 L20 4 Z"
+        fill="#5c4033"
+        stroke="#2a1810"
+        stroke-width="0.5"
+        stroke-linejoin="round"/>
+
+  <!-- Morse code dots at bottom: · – · (CW) -->
+  <circle cx="9" cy="27" r="1.5" fill="#8b7355"/>
+  <rect x="13" y="25.5" width="6" height="3" rx="1" fill="#8b7355"/>
+  <circle cx="25" cy="27" r="1.5" fill="#8b7355"/>
+</svg>
