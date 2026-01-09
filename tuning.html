@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vibroplex Bug Tuning & Descratching</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+            background: 
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0,0,0,0.03) 2px,
+                    rgba(0,0,0,0.03) 4px
+                ),
+                linear-gradient(to bottom, #d4c4a8, #c9b896, #bfae84);
+            font-family: 'Special Elite', 'Courier New', monospace;
+            color: #2a1810;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: #f4e8d3;
+            border: 3px double #5c4033;
+            padding: 40px;
+            box-shadow: 
+                0 0 0 1px #8b7355,
+                0 0 0 4px #f4e8d3,
+                0 0 0 5px #5c4033,
+                8px 8px 20px rgba(0,0,0,0.4);
+            position: relative;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 1px solid #c9b896;
+            pointer-events: none;
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #5c4033;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-family: 'Special Elite', 'Courier New', monospace;
+            font-size: 2em;
+            margin: 0 0 5px 0;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #2a1810;
+            text-shadow: 1px 1px 0 #c9b896;
+        }
+
+        .header .subtitle {
+            font-size: 0.9em;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: #5c4033;
+            margin-top: 10px;
+        }
+
+        .deco-line {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 15px 0;
+            color: #8b7355;
+        }
+
+        .deco-line::before {
+            content: '– · – ·';
+            letter-spacing: 1px;
+        }
+
+        .deco-line::after {
+            content: '– – · –';
+            letter-spacing: 1px;
+        }
+
+        .telegraph-art {
+            font-size: 1.4em;
+            color: #5c4033;
+        }
+
+        .nav-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #5c4033;
+            text-decoration: none;
+            font-size: 0.9em;
+            letter-spacing: 1px;
+        }
+
+        .nav-link:hover {
+            text-decoration: underline;
+        }
+
+        .morse-decoration {
+            text-align: center;
+            color: #8b7355;
+            letter-spacing: 4px;
+            font-size: 0.9em;
+            margin: 20px 0;
+        }
+
+        .section-title {
+            font-family: 'Special Elite', 'Courier New', monospace;
+            font-size: 1.6em;
+            text-align: center;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #2a1810;
+            margin: 20px 0;
+            text-shadow: 1px 1px 0 #c9b896;
+        }
+
+        .info-section {
+            background: #ebe0c8;
+            border: 1px solid #8b7355;
+            padding: 20px 25px;
+            margin: 20px 0;
+        }
+
+        .info-heading {
+            font-family: 'Special Elite', 'Courier New', monospace;
+            font-size: 1.2em;
+            color: #2a1810;
+            margin: 0 0 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #8b7355;
+        }
+
+        .info-section p {
+            line-height: 1.7;
+            margin: 10px 0;
+        }
+
+        .info-list {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .info-list li {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+
+        .info-quote {
+            background: #faf6ed;
+            border-left: 3px solid #5c4033;
+            padding: 10px 15px;
+            margin: 15px 0;
+            font-style: italic;
+            color: #5c4033;
+        }
+
+        .tip-card {
+            display: flex;
+            gap: 15px;
+            background: #faf6ed;
+            border: 1px solid #c9b896;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .tip-number {
+            width: 35px;
+            height: 35px;
+            background: #5c4033;
+            color: #f4e8d3;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .tip-content {
+            flex: 1;
+            line-height: 1.6;
+        }
+
+        .tip-content strong {
+            color: #2a1810;
+        }
+
+        a {
+            color: #5c4033;
+        }
+
+        .resource-card {
+            background: #faf6ed;
+            border: 2px solid #8b7355;
+            padding: 15px 20px;
+            margin: 15px 0;
+        }
+
+        .resource-card h4 {
+            margin: 0 0 10px 0;
+            color: #2a1810;
+        }
+
+        .resource-card ul {
+            margin: 10px 0 0 0;
+            padding-left: 20px;
+        }
+
+        .resource-card li {
+            margin: 8px 0;
+            line-height: 1.5;
+        }
+
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #8b7355;
+            font-size: 0.8em;
+            color: #6b5a47;
+            text-align: center;
+            line-height: 1.8;
+        }
+
+        .stamp {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
+            border: 2px solid #8b4513;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.6em;
+            text-align: center;
+            color: #8b4513;
+            transform: rotate(15deg);
+            opacity: 0.7;
+            line-height: 1.2;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px 15px;
+            }
+            .header h1 {
+                font-size: 1.5em;
+            }
+            .tip-card {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .tip-number {
+                width: 30px;
+                height: 30px;
+                font-size: 1em;
+            }
+            .stamp {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="stamp">CW<br>OPR<br>·—·</div>
+        
+        <a href="index.html" class="nav-link">← Back to Bug Dating & ID</a>
+
+        <div class="header">
+            <h1>Bug Tuning</h1>
+            <h1>& Descratching</h1>
+            <div class="deco-line">
+                <span class="telegraph-art">🔧</span>
+            </div>
+            <div class="subtitle">Tips from the Brass Pounders</div>
+        </div>
+
+        <div class="morse-decoration">
+            —···   ··—   ——·
+        </div>
+
+        <p style="text-align: center; line-height: 1.7;">
+            Getting scratchy dits? Here's what the operators recommend.
+        </p>
+
+        <div class="info-section">
+            <h3 class="info-heading">⚡ The "Descratcher" Debate</h3>
+            <p>Capacitor-based "descratchers" are a common accessory sold to filter noise from bug contacts. Opinions vary on their effectiveness:</p>
+            <ul class="info-list">
+                <li><strong>The case for:</strong> <a href="https://www.dl6zb.de/MORSE_KEYER/vibroplex_debouncing.html" target="_blank">DL6ZB's oscilloscope measurements</a> show that a 330nF capacitor across the bug connections visibly reduces dit bounce at ~20 WPM. He recommends 220nF at the bug plus 100nF in the keyer jack for additional RF filtering.</li>
+                <li><strong>The case against:</strong> Some operators report minimal audible difference, or find that proper adjustment and contact cleaning solve the problem without added components.</li>
+                <li><strong>The radio factor:</strong> Your radio may already have built-in filtering on the key input. Icoms and Kenwoods typically do; many Yaesus don't. If your radio already filters, an external descratcher may be redundant.</li>
+            </ul>
+            <p class="info-quote">"Same bug sounds lovely on an Icom or Kenwood and like hot trash on my Yaesu FT710." — AJ7CM</p>
+        </div>
+
+        <div class="info-section">
+            <h3 class="info-heading">🔧 What Actually Helps</h3>
+            <p>Before buying a descratcher, try these proven techniques:</p>
+            
+            <div class="tip-card">
+                <div class="tip-number">1</div>
+                <div class="tip-content">
+                    <strong>Clean the contacts</strong><br>
+                    Start with paper between the dit contacts, then try DeoxIT and/or brass polish with a soft cloth. Wiggle the contacts while testing — if you get solid dits with the post rotated off-center, they're still grimy.
+                </div>
+            </div>
+
+            <div class="tip-card">
+                <div class="tip-number">2</div>
+                <div class="tip-content">
+                    <strong>Adjust properly</strong><br>
+                    Don't set up your bug like iambic paddles with tiny travel. Bugs want some <em>slap</em> — put velocity into those dits. A properly adjusted bug has more travel than you might expect.
+                </div>
+            </div>
+
+            <div class="tip-card">
+                <div class="tip-number">3</div>
+                <div class="tip-content">
+                    <strong>The sponge trick</strong><br>
+                    Cut a small piece of kitchen sponge and wedge it inside the gap of the dit spring. This reduces wobble and makes contact more consistent. Multiple operators (WO6W, AJ7CM) swear by this simple fix.
+                </div>
+            </div>
+
+            <div class="tip-card">
+                <div class="tip-number">4</div>
+                <div class="tip-content">
+                    <strong>3D printed wedge</strong><br>
+                    Some ops use a 3D printed wedge instead of sponge for a more permanent solution. Placing it closer to the contact point seems to work best. See K8CES's designs below.
+                </div>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h3 class="info-heading">🐢 Slowing Down Your Bug</h3>
+            <p>Need to send slower? Moving the weight only goes so far. Arm extensions add mass to the pendulum, letting you reach slower speeds without sacrificing control.</p>
+            <div class="resource-card">
+                <h4>Arm Extension Options</h4>
+                <ul>
+                    <li><a href="https://www.printables.com/model/1199720-extension-arm-to-slow-vibroplex-cw-bugs" target="_blank">3D Printable Extension Arm</a> — Free STL on Printables</li>
+                    <li><a href="https://www.ebay.com/itm/186527271825" target="_blank">Brass extension arm (eBay)</a> — Ready-made option</li>
+                    <li><a href="https://www.ebay.com/itm/187785533320" target="_blank">Another brass extension (eBay)</a> — Alternative seller</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h3 class="info-heading">🖨️ 3D Printed Improvements</h3>
+            <p>K8CES has been experimenting with 3D printed accessories for Vibroplex bugs, including damper wedges and other improvements.</p>
+            <div class="resource-card">
+                <h4>K8CES's Thingiverse Designs</h4>
+                <p style="margin: 0;"><a href="https://www.thingiverse.com/ZeusK8CES/designs" target="_blank">→ View all designs on Thingiverse</a></p>
+            </div>
+        </div>
+
+        <div class="info-section">
+            <h3 class="info-heading">🎧 Diagnostic Tips</h3>
+            <ul class="info-list">
+                <li><strong>Record yourself on WebSDR:</strong> What you hear locally (bug mechanics + sidetone) isn't what goes out on the air. Use a WebSDR to hear your actual transmitted signal.</li>
+                <li><strong>Try noise-canceling headphones:</strong> Helps you focus on sidetone rather than the mechanical clatter of the bug.</li>
+                <li><strong>Test on different radios:</strong> If possible, try your bug on another rig. Night-and-day differences between radios can reveal whether it's the bug or the radio's filtering.</li>
+            </ul>
+        </div>
+
+        <div class="info-section">
+            <h3 class="info-heading">📻 Radio Filtering Notes</h3>
+            <p>Based on operator reports:</p>
+            <ul class="info-list">
+                <li><strong>Good filtering:</strong> Icom, Kenwood (generally)</li>
+                <li><strong>Less filtering:</strong> Yaesu FT710, some others</li>
+                <li><strong>Varies:</strong> Xiegu G90 (reported better than FT710)</li>
+            </ul>
+            <p style="font-style: italic; margin-top: 10px;">Your mileage may vary — these are anecdotal reports from operators, not official specs.</p>
+        </div>
+
+        <p style="text-align: center; font-style: italic; margin-top: 25px; color: #6b5a47;">
+            Tips compiled from the CW community.<br>Thanks to AJ7CM, K8CES, WO6W, KG5VNQ, DL6ZB, and others.
+        </p>
+
+        <div class="morse-decoration">
+            ——···   ···——
+        </div>
+
+        <div class="footer">
+            <a href="index.html">Bug Dating & Model ID</a> · <a href="https://www.dl6zb.de/MORSE_KEYER/vibroplex_debouncing.html" target="_blank">DL6ZB Descratcher Testing</a> · <a href="https://www.thingiverse.com/ZeusK8CES/designs" target="_blank">K8CES Thingiverse</a>
+            <div style="margin-top: 10px;">
+                Part of the <a href="index.html">bug.date</a> project. 73!
+            </div>
+        </div>
+    </div>
+</body>
+</html>

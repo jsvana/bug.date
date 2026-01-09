@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vibroplex Bug Dating Service</title>
+    <title>Vibroplex Bug Dating & Identification</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
 
@@ -283,6 +283,90 @@
             border-color: #5c4033;
         }
 
+        .info-section {
+            background: #ebe0c8;
+            border: 1px solid #8b7355;
+            padding: 20px 25px;
+            margin: 20px 0;
+        }
+
+        .info-heading {
+            font-family: 'Special Elite', 'Courier New', monospace;
+            font-size: 1.2em;
+            color: #2a1810;
+            margin: 0 0 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #8b7355;
+        }
+
+        .info-section p {
+            line-height: 1.7;
+            margin: 10px 0;
+        }
+
+        .info-list {
+            margin: 15px 0;
+            padding-left: 20px;
+        }
+
+        .info-list li {
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+
+        .info-quote {
+            background: #faf6ed;
+            border-left: 3px solid #5c4033;
+            padding: 10px 15px;
+            margin: 15px 0;
+            font-style: italic;
+            color: #5c4033;
+        }
+
+        .tip-card {
+            display: flex;
+            gap: 15px;
+            background: #faf6ed;
+            border: 1px solid #c9b896;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .tip-number {
+            width: 35px;
+            height: 35px;
+            background: #5c4033;
+            color: #f4e8d3;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .tip-content {
+            flex: 1;
+            line-height: 1.6;
+        }
+
+        .tip-content strong {
+            color: #2a1810;
+        }
+
+        @media (max-width: 600px) {
+            .tip-card {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .tip-number {
+                width: 30px;
+                height: 30px;
+                font-size: 1em;
+            }
+        }
+
         .morse-decoration {
             text-align: center;
             color: #8b7355;
@@ -439,11 +523,13 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: flex-start;
             cursor: pointer;
             padding: 10px;
             border: 2px solid #c9b896;
             background: #faf6ed;
             transition: all 0.2s;
+            text-align: center;
         }
 
         .damper-option:hover {
@@ -459,22 +545,34 @@
 
         .damper-option input {
             display: none;
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
         }
 
-        .damper-svg {
-            width: 80px;
-            height: 80px;
-            margin-bottom: 8px;
+        .damper-img {
+            display: block;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 8px auto;
+            object-fit: contain;
+            border: 1px solid #c9b896;
+            background: #f0f0f0;
+            flex-shrink: 0;
         }
 
         .damper-label {
+            display: block;
             font-size: 1.1em;
             font-weight: bold;
             color: #5c4033;
             margin-bottom: 4px;
+            text-align: center;
         }
 
         .damper-desc {
+            display: block;
             font-size: 0.75em;
             color: #6b5a47;
             text-align: center;
@@ -606,96 +704,42 @@
             <div class="damper-grid">
                 <label class="damper-option" onclick="selectDamper('L')">
                     <input type="radio" name="damperType" value="L">
-                    <svg class="damper-svg" viewBox="0 0 80 80">
-                        <rect x="5" y="5" width="70" height="70" fill="none" stroke="#c9b896" stroke-width="1"/>
-                        <!-- L-shaped base piece -->
-                        <path d="M20 65 L20 35 L35 35 L35 40 L25 40 L25 65 Z" fill="#5c4033" stroke="#2a1810" stroke-width="1"/>
-                        <!-- Hinged upper piece -->
-                        <path d="M35 38 L55 38 L55 28 L35 28 Z" fill="#8b7355" stroke="#2a1810" stroke-width="1"/>
-                        <!-- Wheel -->
-                        <circle cx="60" cy="33" r="8" fill="none" stroke="#5c4033" stroke-width="2"/>
-                        <circle cx="60" cy="33" r="2" fill="#5c4033"/>
-                    </svg>
+                    <img class="damper-img" src="img/damper-L.png" alt="L-shaped damper">
                     <span class="damper-label">"L"</span>
                     <span class="damper-desc">Two cast pieces, L-shaped base, hinged top with wheel</span>
                 </label>
 
                 <label class="damper-option" onclick="selectDamper('U')">
                     <input type="radio" name="damperType" value="U">
-                    <svg class="damper-svg" viewBox="0 0 80 80">
-                        <rect x="5" y="5" width="70" height="70" fill="none" stroke="#c9b896" stroke-width="1"/>
-                        <!-- U-shaped casting -->
-                        <path d="M20 25 L20 65 L25 65 L25 30 L45 30 L45 65 L50 65 L50 25 Z" fill="#5c4033" stroke="#2a1810" stroke-width="1"/>
-                        <!-- Wheel on side -->
-                        <circle cx="55" cy="45" r="8" fill="none" stroke="#5c4033" stroke-width="2"/>
-                        <circle cx="55" cy="45" r="2" fill="#5c4033"/>
-                        <line x1="50" y1="45" x2="47" y2="45" stroke="#5c4033" stroke-width="2"/>
-                    </svg>
+                    <img class="damper-img" src="img/damper-U.png" alt="U-shaped damper">
                     <span class="damper-label">"U"</span>
                     <span class="damper-desc">U-shaped casting with wheel on side</span>
                 </label>
 
                 <label class="damper-option" onclick="selectDamper('T')">
                     <input type="radio" name="damperType" value="T">
-                    <svg class="damper-svg" viewBox="0 0 80 80">
-                        <rect x="5" y="5" width="70" height="70" fill="none" stroke="#c9b896" stroke-width="1"/>
-                        <!-- Vertical post -->
-                        <rect x="35" y="30" width="10" height="35" fill="#5c4033" stroke="#2a1810" stroke-width="1"/>
-                        <!-- Horizontal arm through post -->
-                        <rect x="20" y="38" width="40" height="6" fill="#8b7355" stroke="#2a1810" stroke-width="1"/>
-                        <!-- Wheel at end -->
-                        <circle cx="65" cy="41" r="8" fill="none" stroke="#5c4033" stroke-width="2"/>
-                        <circle cx="65" cy="41" r="2" fill="#5c4033"/>
-                    </svg>
+                    <img class="damper-img" src="img/damper-T.png" alt="T-shaped damper">
                     <span class="damper-label">"T"</span>
                     <span class="damper-desc">Vertical post with horizontal arm, wheel at end</span>
                 </label>
 
                 <label class="damper-option" onclick="selectDamper('M')">
                     <input type="radio" name="damperType" value="M">
-                    <svg class="damper-svg" viewBox="0 0 80 80">
-                        <rect x="5" y="5" width="70" height="70" fill="none" stroke="#c9b896" stroke-width="1"/>
-                        <!-- Two posts -->
-                        <rect x="20" y="30" width="8" height="35" fill="#5c4033" stroke="#2a1810" stroke-width="1"/>
-                        <rect x="52" y="30" width="8" height="35" fill="#5c4033" stroke="#2a1810" stroke-width="1"/>
-                        <!-- Horizontal bar -->
-                        <rect x="20" y="30" width="40" height="5" fill="#8b7355" stroke="#2a1810" stroke-width="1"/>
-                        <!-- Wheel hanging from bar -->
-                        <line x1="40" y1="35" x2="40" y2="45" stroke="#5c4033" stroke-width="2"/>
-                        <circle cx="40" cy="53" r="8" fill="none" stroke="#5c4033" stroke-width="2"/>
-                        <circle cx="40" cy="53" r="2" fill="#5c4033"/>
-                    </svg>
+                    <img class="damper-img" src="img/damper-M.png" alt="M-shaped damper">
                     <span class="damper-label">"M"</span>
                     <span class="damper-desc">Wheel hangs from bar between two posts</span>
                 </label>
 
                 <label class="damper-option" onclick="selectDamper('I')">
                     <input type="radio" name="damperType" value="I">
-                    <svg class="damper-svg" viewBox="0 0 80 80">
-                        <rect x="5" y="5" width="70" height="70" fill="none" stroke="#c9b896" stroke-width="1"/>
-                        <!-- U-shaped bent metal holder -->
-                        <path d="M30 65 L30 40 L32 38 L48 38 L50 40 L50 65 L45 65 L45 43 L35 43 L35 65 Z" fill="#5c4033" stroke="#2a1810" stroke-width="1"/>
-                        <!-- Wheel held up -->
-                        <circle cx="40" cy="28" r="8" fill="none" stroke="#5c4033" stroke-width="2"/>
-                        <circle cx="40" cy="28" r="2" fill="#5c4033"/>
-                        <line x1="40" y1="36" x2="40" y2="38" stroke="#5c4033" stroke-width="2"/>
-                    </svg>
+                    <img class="damper-img" src="img/damper-I.png" alt="I-shaped damper">
                     <span class="damper-label">"I"</span>
                     <span class="damper-desc">U-shaped bent metal holds wheel, looks like "I"</span>
                 </label>
 
                 <label class="damper-option" onclick="selectDamper('Simple')">
                     <input type="radio" name="damperType" value="Simple">
-                    <svg class="damper-svg" viewBox="0 0 80 80">
-                        <rect x="5" y="5" width="70" height="70" fill="none" stroke="#c9b896" stroke-width="1"/>
-                        <!-- Simple post without wheel -->
-                        <rect x="35" y="30" width="10" height="35" fill="#5c4033" stroke="#2a1810" stroke-width="1"/>
-                        <!-- No wheel - just flat top -->
-                        <rect x="30" y="25" width="20" height="8" fill="#8b7355" stroke="#2a1810" stroke-width="1"/>
-                        <!-- X to indicate no wheel -->
-                        <text x="40" y="58" text-anchor="middle" fill="#8b7355" font-size="10" font-family="Special Elite">NO</text>
-                        <text x="40" y="68" text-anchor="middle" fill="#8b7355" font-size="10" font-family="Special Elite">WHEEL</text>
-                    </svg>
+                    <img class="damper-img" src="img/damper-Simple.png" alt="Simple damper (no wheel)">
                     <span class="damper-label">"Simple"</span>
                     <span class="damper-desc">No loosely-mounted wheel</span>
                 </label>
@@ -731,9 +775,26 @@
             ——···   ···——
         </div>
 
+        <div class="section-divider">
+            <span>✧ ✧ ✧</span>
+        </div>
+
+        <div class="tuning-link-section" style="text-align: center; padding: 30px 20px; background: #ebe0c8; border: 1px solid #8b7355; margin: 20px 0;">
+            <h2 class="section-title" style="margin-top: 0;">Descratching & Tuning</h2>
+            <p style="line-height: 1.7; margin-bottom: 20px;">
+                Getting scratchy dits? Need to slow down your bug?<br>
+                We've got tips from the brass pounders.
+            </p>
+            <a href="tuning.html" style="display: inline-block; padding: 12px 30px; background: #5c4033; color: #f4e8d3; text-decoration: none; font-family: 'Special Elite', monospace; letter-spacing: 2px; border: 2px solid #2a1810; box-shadow: 3px 3px 0 rgba(0,0,0,0.3);">VIEW TUNING TIPS →</a>
+        </div>
+
+        <div class="morse-decoration">
+            ——···   ···——
+        </div>
+
         <div class="footer">
-            Data compiled by John Elwood, WW7P (SK) and Randy Cole, KN6W.<br>
-            <a href="https://radiotelegraphy.net/vibroplexdating.htm" target="_blank" style="color: #5c4033;">Serial number source</a> · <a href="https://www.vibroplexcollector.net/?page_id=551" target="_blank" style="color: #5c4033;">Model identification source</a>
+            Data compiled by John Elwood, WW7P (SK) and Randy Cole, KN6W. Damper images by Justin King, KG5VNQ.<br>
+            <a href="https://radiotelegraphy.net/vibroplexdating.htm" target="_blank" style="color: #5c4033;">Serial number source</a> · <a href="https://www.vibroplexcollector.net/?page_id=551" target="_blank" style="color: #5c4033;">Model identification source</a> · <a href="tuning.html" style="color: #5c4033;">Tuning tips</a>
             <div class="credit">
                 "Now, when someone asks how old your key is, you can say,<br>
                 'The birth date of my Vibroplex is ______.'"<br>
