@@ -1,0 +1,58 @@
+# www.bug.date — Vibroplex bug dating & identification
+# Humans and agents alike are welcome here. 73!
+#
+# Content Signals (https://contentsignals.org/):
+#   search   = yes  -> may be indexed and linked in search results
+#   ai-input = yes  -> may be used as input to AI (inference/grounding)
+#   ai-train = yes  -> may be used for AI training
+#
+# Agent-friendly resources:
+#   Markdown content: https://www.bug.date/index.md and https://www.bug.date/tuning.md
+#   LLM guide:        https://www.bug.date/llms.txt
+#   Agent skills:     https://www.bug.date/.well-known/agent-skills/index.json
+
+User-agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /
+
+# AI crawlers and agents are explicitly welcome
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+Sitemap: https://www.bug.date/sitemap.xml

@@ -1,0 +1,20 @@
+# bug.date — Vibroplex Bug Dating & Identification
+
+> Date a Vibroplex semi-automatic Morse code key ("bug") from its serial number, identify the model from its damper shape and base width, and tune or restore it. Serial data compiled by John Elwood, WW7P (SK) from over 3,000 documented keys; model identification data from Randy Cole, KN6W.
+
+Key facts for agents:
+
+- The full serial-number-to-year lookup tables (1905–1995, NYC and Portland, ME eras) are published as Markdown tables — no JavaScript needed.
+- Some serial numbers were reused across eras; the docs include disambiguation rules (nameplate address, model production years).
+- An agent skill for dating bugs is available at https://www.bug.date/.well-known/agent-skills/index.json
+
+## Docs
+
+- [Bug dating & model identification](https://www.bug.date/index.md): Serial number → year tables for all eras, prefix serials, gaps, disambiguation rules, model production years, and the damper-shape × base-width model identification matrix
+- [Tuning, descratching & maintenance](https://www.bug.date/tuning.md): Step-by-step bug setup, fixing scratchy dits, slowing a bug down, ultrasonic cleaning, parts lists, and nickel plating
+
+## Optional
+
+- [Original serial number research (WW7P)](https://radiotelegraphy.net/vibroplexdating.htm): Primary source for the dating tables
+- [Model identification source (vibroplexcollector.net)](https://www.vibroplexcollector.net/?page_id=551): Primary source for the model ID matrix
+- Contact: Jay, W6JY — jaysvana@gmail.com
