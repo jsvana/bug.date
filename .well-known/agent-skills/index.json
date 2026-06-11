@@ -1,0 +1,12 @@
+{
+  "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
+  "skills": [
+    {
+      "name": "vibroplex-bug-dating",
+      "type": "skill-md",
+      "description": "Date a Vibroplex semi-automatic Morse code key (\"bug\") from its serial number, and identify the model from its physical features. Covers 1905-1995 production (NYC and Portland, ME eras), prefix serials, and disambiguation of reused serial numbers.",
+      "url": "/.well-known/agent-skills/vibroplex-bug-dating/SKILL.md",
+      "digest": "sha256:d2079b80596d1b551083faca0d0ea3b7108888dedfdd7e7b098f7211073e689f"
+    }
+  ]
+}
